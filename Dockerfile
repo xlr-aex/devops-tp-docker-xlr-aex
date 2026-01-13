@@ -11,7 +11,9 @@ RUN addgroup -g 1000 -S appgroup && \
     adduser -u 1000 -S appuser -G appgroup
 
 # Installer uniquement les dépendances nécessaires
-RUN apk add --no-cache \
+RUN apk update && \
+    apk upgrade --no-cache && \
+    apk add --no-cache \
     ca-certificates \
     && rm -rf /var/cache/apk/*
 
