@@ -23,32 +23,50 @@ function generateContainerId() {
 function testContainer() {
     const resultBox = document.getElementById('result');
     const statusElement = document.getElementById('status');
-    
+
     statusElement.textContent = 'Test en cours...';
     statusElement.style.color = '#EA580C';
 
     setTimeout(() => {
         statusElement.textContent = 'Container opérationnel';
         statusElement.style.color = '#16A34A';
-        
-        resultBox.innerHTML = `
-            <strong>Test du Container Réussi</strong><br><br>
-            docker ps<br>
-            CONTAINER ID   IMAGE                               STATUS<br>
-            ${document.getElementById('container-id').textContent}   ghcr.io/xlr-aex/devops-tp-docker-xlr-aex:latest   Up 2 minutes<br><br>
-            - Serveur Nginx : OK<br>
-            - Application Web : OK<br>
-            - Port 80 : LISTENING<br>
-            - Health Check : PASSED
-        `;
+
+        // Sécurisation: Utilisation de DOM API au lieu de innerHTML pour éviter les failles XSS
+        resultBox.textContent = ''; // Nettoyer le contenu précédent
+
+        const title = document.createElement('strong');
+        title.textContent = 'Test du Container Réussi';
+        resultBox.appendChild(title);
+        resultBox.appendChild(document.createElement('br'));
+        resultBox.appendChild(document.createElement('br'));
+
+        const lines = [
+            'docker ps',
+            'CONTAINER ID   IMAGE                               STATUS',
+            `${document.getElementById('container-id').textContent}   ghcr.io/xlr-aex/devops-tp-docker-xlr-aex:latest   Up 2 minutes`,
+            '',
+            '- Serveur Nginx : OK',
+            '- Application Web : OK',
+            '- Port 80 : LISTENING',
+            '- Health Check : PASSED'
+        ];
+
+        lines.forEach(line => {
+            if (line === '') {
+                resultBox.appendChild(document.createElement('br'));
+            } else {
+                resultBox.appendChild(document.createTextNode(line));
+                resultBox.appendChild(document.createElement('br'));
+            }
+        });
         resultBox.className = 'result-box success';
     }, 1500);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     updateTimestamp();
     setInterval(updateTimestamp, 1000);
-    
+
     const containerId = generateContainerId();
     document.getElementById('container-id').textContent = containerId;
     document.getElementById('status').textContent = 'Container opérationnel';
