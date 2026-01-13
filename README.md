@@ -1,4 +1,7 @@
-# TP DevOps: Docker & CI/CD
+# TP# DevOps TP Docker - XLR AEX
+
+[![Build, Scan and Push Docker Image](https://github.com/xlr-aex/devops-tp-docker-xlr-aex/actions/workflows/docker-deploy.yml/badge.svg)](https://github.com/xlr-aex/devops-tp-docker-xlr-aex/actions/workflows/docker-deploy.yml)
+[![CodeQL](https://github.com/xlr-aex/devops-tp-docker-xlr-aex/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/xlr-aex/devops-tp-docker-xlr-aex/actions/workflows/codeql-analysis.yml)CI/CD
 
 Projet réalisé dans le cadre du TP 1 - Déploiement Automatisé avec Docker et GitHub Actions.
 
