@@ -1,0 +1,18 @@
+FROM nginx:alpine
+
+# Métadonnées
+LABEL maintainer="TP DevOps"
+LABEL description="Application DevOps optimisée"
+
+# Copier en une seule couche
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY src/ /usr/share/nginx/html/
+
+# Supprimer les fichiers inutiles (exemple, ici on n'en a pas vraiment mais pour le principe)
+RUN rm -rf /usr/share/nginx/html/*.md || true
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s CMD wget -q --spider http://localhost/ || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]
